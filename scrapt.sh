@@ -22,18 +22,10 @@ curl -s $micro | egrep -o '/zyedidia/micro/releases/download/v[^>]+\.deb' | wget
 ### [end] deb file fetching
 ###########################
 
-# make folders and hardlinks for architectures
-for i in $(ls | egrep -oi -- '-[^-]+.deb' | egrep -o '\w+\.' | egrep -o '\w+' | sort -u); do
-    mkdir -pv ../$i
-    cp -lv *-$i.deb ../$i/
-done
-
 cd ../
 
-for i in */; do
-    apt-ftparchive packages $i > "$i/Packages"
-    echo "Created Packages file for $i"
-done
+apt-ftparchive packages . > Packages
+echo "Created Packages file"
 
 apt-ftparchive release . > Release
 echo "Created Release file"
