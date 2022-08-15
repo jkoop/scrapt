@@ -15,7 +15,7 @@ echo "Fetching missing deb files"
 
 cd ../
 
-apt-ftparchive packages . > Packages
+apt-ftparchive packages . | tee Packages | gzip -9 > Packages.gz
 echo "Created Packages file"
 
 apt-ftparchive release . > Release
